@@ -72,10 +72,10 @@ export function SubscriptionForm() {
             )}
           </div>
 
-          {/* Nazwa firmy Field */}
+          {/* Company name Field */}
           <div>
             <label htmlFor="nazwaFirmy" className="block text-sm font-medium text-gray-700 mb-1">
-              Nazwa firmy
+              Company name
             </label>
             <div className="relative">
               <Building2
@@ -103,10 +103,10 @@ export function SubscriptionForm() {
             )}
           </div>
 
-          {/* Nazwisko Field */}
+          {/* Last name Field */}
           <div>
             <label htmlFor="nazwisko" className="block text-sm font-medium text-gray-700 mb-1">
-              Nazwisko
+              Last name
             </label>
             <div className="relative">
               <User
