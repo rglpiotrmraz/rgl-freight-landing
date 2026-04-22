@@ -44,7 +44,7 @@ export async function subscribeToNewsletter(
           email,
           name: `${nazwaFirmy} | ${nazwisko}`,
           list_uuids: [LISTMONK_LIST_UUID],
-          status: "enabled",
+          status: "unconfirmed",
         }),
       }
     );
@@ -58,9 +58,14 @@ export async function subscribeToNewsletter(
       };
     }
 
+    const responseData = await response.json().catch(() => ({}));
+    const hasOptin = responseData?.data?.has_optin === true;
+
     return {
       success: true,
-      message: "Thank you for joining!",
+      message: hasOptin
+        ? "Check your inbox and confirm your email to complete the subscription."
+        : "Thank you for joining!",
     };
   } catch (error) {
     console.error("Subscription fetch error:", error);
