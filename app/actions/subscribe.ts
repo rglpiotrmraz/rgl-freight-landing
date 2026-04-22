@@ -19,6 +19,18 @@ export async function subscribeToNewsletter(
 
   const { email, nazwaFirmy, nazwisko } = parseResult.data;
 
+  // Debug: log env availability (values hidden for security)
+  console.log("LISTMONK_API_URL present:", !!LISTMONK_API_URL);
+  console.log("LISTMONK_LIST_UUID present:", !!LISTMONK_LIST_UUID);
+
+  if (!LISTMONK_API_URL || !LISTMONK_LIST_UUID) {
+    console.error("Missing environment variables for Listmonk integration");
+    return {
+      success: false,
+      message: "Server configuration error. Please contact support.",
+    };
+  }
+
   try {
     const response = await fetch(
       `${LISTMONK_API_URL}/api/public/subscription`,
@@ -26,6 +38,7 @@ export async function subscribeToNewsletter(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "1",
         },
         body: JSON.stringify({
           email,
