@@ -218,9 +218,13 @@ async function proxyToListmonk(request: NextRequest) {
       });
     }
 
-    // For HTML: inject RGL branding
+    // For HTML: inject RGL branding and strip listmonk branding
     const html = await upstream.text();
     let modified = html;
+
+    // Strip "Powered by listmonk"
+    modified = modified.replace(/Powered by listmonk/gi, "");
+    modified = modified.replace(/<[^>]*>\s*listmonk\s*<\/[^>]*>/gi, "");
 
     if (modified.includes("</head>")) {
       modified = modified.replace("</head>", `${RGL_CSS}</head>`);
@@ -234,6 +238,7 @@ async function proxyToListmonk(request: NextRequest) {
 
     const responseHeaders = new Headers(upstream.headers);
     responseHeaders.delete("content-encoding");
+    responseHeaders.set("content-type", "text/html; charset=utf-8");
     responseHeaders.set(
       "content-length",
       String(new TextEncoder().encode(modified).length)

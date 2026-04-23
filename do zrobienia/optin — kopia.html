@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Confirmed — RGL Freight Offers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #ffffff;
+      color: #171717;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #waves-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      padding: 48px 32px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 36px 24px;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+      }
+    }
+
+    .logo {
+      margin-bottom: 28px;
+    }
+
+    .logo img {
+      max-width: 140px;
+      height: auto;
+    }
+
+    .status-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 20px;
+      background: #f0fdf4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .status-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #16a34a;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #000000;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    @media (min-width: 640px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #6b7280;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .email {
+      font-weight: 600;
+      color: #171717;
+      word-break: break-all;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: #000000;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #374151;
+    }
+
+    /* Footer matching landing page (pixel-perfect) */
+    footer {
+      margin-top: auto;
+      border-top: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+
+    .footer-inner {
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 48px 16px;
+    }
+
+    @media (min-width: 640px) {
+      .footer-inner {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .footer-inner {
+        padding-left: 32px;
+        padding-right: 32px;
+      }
+    }
+
+    .footer-logo {
+      margin-bottom: 40px;
+    }
+
+    .footer-logo img {
+      max-width: 140px;
+      height: auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    @media (min-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .footer-heading {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #111827;
+      border-bottom: 2px solid #374151;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    .footer-address {
+      font-style: normal;
+    }
+
+    .footer-address p,
+    .footer-text p {
+      font-size: 0.875rem;
+      color: #4b5563;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .footer-address p + p,
+    .footer-text p + p {
+      margin-top: 4px;
+    }
+
+    .footer-name {
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .footer-address a,
+    .footer-text a {
+      color: #4b5563;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-address a:hover,
+    .footer-text a:hover {
+      color: #000000;
+    }
+
+    .footer-copyright {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+    }
+
+    .footer-copyright p {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="card">
+      <div class="status-icon">
+        <svg viewBox="0 0 24 24">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <h1>Subscription Confirmed</h1>
+
+      {{ if .Data.Subscriber }}
+        <p>Thank you, <span class="email">{{ .Data.Subscriber.Email }}</span>.</p>
+      {{ else }}
+        <p>Thank you for confirming your subscription.</p>
+      {{ end }}
+
+      <p>You are now on the RGL Freight priority list and will receive direct freight offers tailored to your fleet.</p>
+
+      <a href="https://www.rgl.com.pl" class="btn">Visit RGL Website</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="https://img2.gimm.io/6cb3626c-e7fc-4185-bf1a-8236cccf1c51/-/resize/266x186/img.png" alt="RGL Logistics Network logo">
+      </div>
+
+      <div class="footer-grid">
+        <div>
+          <h2 class="footer-heading">Contact</h2>
+          <address class="footer-address">
+            <p class="footer-name">Piotr Mraz</p>
+            <p><a href="mailto:p.mraz@rgl.com.pl">p.mraz@rgl.com.pl</a></p>
+            <p><a href="tel:+48577930002">+48 577 930 002</a></p>
+            <p><a href="https://www.rgl.com.pl" target="_blank" rel="noopener noreferrer">www.rgl.com.pl</a></p>
+          </address>
+        </div>
+
+        <div>
+          <h2 class="footer-heading">Business Info</h2>
+          <div class="footer-text">
+            <p class="footer-name">RGL Robert Gajewski</p>
+            <p>ul. Krakowska 28a</p>
+            <p>45-018 Opole</p>
+            <p>NIP: PL7532000665</p>
+            <p>Timocom ID: 330086</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-copyright">
+        <p>&copy; 2026 RGL Logistics Network. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
