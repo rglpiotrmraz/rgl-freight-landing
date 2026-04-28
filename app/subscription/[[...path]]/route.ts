@@ -10,108 +10,165 @@ const RGL_CSS = `
   box-sizing: border-box;
 }
 
-body {
+html, body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
   background: #ffffff !important;
   color: #111111 !important;
   margin: 0 !important;
   padding: 0 !important;
   line-height: 1.6 !important;
+  min-height: 100vh;
 }
 
-.container {
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main, .container, .wrap, section {
+  flex: 1 0 auto;
+}
+
+.container, .wrap {
   max-width: 680px !important;
   margin: 0 auto !important;
   padding: 48px 24px !important;
 }
 
-header {
+header, .header {
   text-align: center !important;
   margin-bottom: 40px !important;
 }
 
-header h1, h1, h2, h3 {
+h1, .title {
+  font-size: 36px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.025em !important;
+  color: #000000 !important;
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+  line-height: 1.1 !important;
+}
+
+h2 {
+  font-size: 24px !important;
   font-weight: 600 !important;
   color: #111111 !important;
   margin-top: 0 !important;
 }
 
-header p, p {
-  color: #666666 !important;
+h3 {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: #111111 !important;
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
 }
 
-main {
-  min-height: calc(100vh - 400px) !important;
+p {
+  color: #4b5563 !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+a {
+  color: #111111 !important;
+  text-decoration: underline !important;
+}
+
+a:hover {
+  opacity: 0.8 !important;
 }
 
 form {
   margin-top: 24px !important;
-}
-
-form h3 {
-  font-size: 18px !important;
-  margin-bottom: 16px !important;
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 32px 24px !important;
 }
 
 label {
-  display: flex !important;
-  align-items: center !important;
-  font-size: 15px !important;
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   color: #374151 !important;
-  cursor: pointer !important;
-}
-
-input[type="checkbox"] {
-  width: 18px !important;
-  height: 18px !important;
-  margin-right: 10px !important;
-  accent-color: #111111 !important;
-  cursor: pointer !important;
-  flex-shrink: 0 !important;
+  margin-bottom: 4px !important;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"],
-textarea {
+input[type="number"],
+textarea,
+select {
   width: 100% !important;
-  padding: 12px 16px !important;
-  border: 1px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  font-size: 16px !important;
+  padding: 10px 14px !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
   color: #111111 !important;
   background: #ffffff !important;
-  margin-top: 8px !important;
+  margin-top: 4px !important;
+  margin-bottom: 16px !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
-textarea:focus {
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
   outline: none !important;
   border-color: #111111 !important;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.05) !important;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 18px !important;
+  height: 18px !important;
+  margin-right: 10px !important;
+  accent-color: #dc2626 !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+}
+
+.checkbox label,
+label.checkbox,
+label:has(input[type="checkbox"]) {
+  display: flex !important;
+  align-items: center !important;
+  font-size: 14px !important;
+  color: #374151 !important;
+  cursor: pointer !important;
+  margin-bottom: 12px !important;
 }
 
 button[type="submit"],
 input[type="submit"],
-button {
+.button, button {
   width: 100% !important;
-  padding: 14px 24px !important;
-  background: #111111 !important;
+  padding: 12px 24px !important;
+  background: #dc2626 !important;
   color: #ffffff !important;
   border: none !important;
-  border-radius: 8px !important;
+  border-radius: 6px !important;
   font-size: 16px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   cursor: pointer !important;
-  margin-top: 24px !important;
-  transition: opacity 0.2s !important;
+  margin-top: 8px !important;
+  transition: background-color 0.2s !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
 }
 
 button[type="submit"]:hover,
 input[type="submit"]:hover,
+.button:hover,
 button:hover {
-  opacity: 0.9 !important;
+  background: #b91c1c !important;
 }
 
 ul {
@@ -129,47 +186,89 @@ li:last-child {
   border-bottom: none !important;
 }
 
-.message, .alert, .notice {
+.message, .alert, .notice, .success, .error {
   padding: 16px !important;
   border-radius: 8px !important;
   margin-bottom: 24px !important;
+  font-size: 14px !important;
 }
 
-a {
+.message.success, .success {
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+.message.error, .error {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border: 1px solid #fecaca !important;
+}
+
+table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-bottom: 24px !important;
+}
+
+td, th {
+  padding: 12px !important;
+  border-bottom: 1px solid #f3f4f6 !important;
+  text-align: left !important;
+  font-size: 14px !important;
+}
+
+th {
+  font-weight: 600 !important;
   color: #111111 !important;
-  text-decoration: underline !important;
+  border-bottom: 2px solid #e5e7eb !important;
 }
 
-a:hover {
-  opacity: 0.8 !important;
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 13px !important;
+  background: #f9fafb !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+}
+
+pre {
+  padding: 16px !important;
+  overflow-x: auto !important;
 }
 </style>
 `;
 
 const RGL_FOOTER = `
-<footer style="border-top:1px solid #e5e7eb;background:#ffffff;margin-top:64px;padding:48px 24px 32px;font-family:'Inter',system-ui,sans-serif;">
-  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;">
-    <div>
-      <h4 style="font-size:16px;font-weight:600;color:#111;margin:0 0 16px 0;">Contact</h4>
-      <address style="font-style:normal;font-size:14px;line-height:1.6;color:#666;">
-        RGL Freight Polska Sp. z o.o.<br>
-        ul. Wielicka 28<br>
-        30-552 Kraków<br>
-        <a href="mailto:biuro@rgl.com.pl" style="color:#666;text-decoration:none;">biuro@rgl.com.pl</a><br>
-        <a href="tel:+48123064050" style="color:#666;text-decoration:none;">+48 12 306 40 50</a>
-      </address>
+<footer style="border-top:1px solid #e5e7eb;background:#ffffff;margin-top:auto;font-family:'Inter',system-ui,sans-serif;">
+  <div style="max-width:1024px;margin:0 auto;padding:48px 16px 32px;">
+    <div style="margin-bottom:40px;">
+      <img src="https://img2.gimm.io/6cb3626c-e7fc-4185-bf1a-8236cccf1c51/-/resize/266x186/img.png" alt="RGL Logistics Network logo" width="140" style="height:auto;display:block;">
     </div>
-    <div>
-      <h4 style="font-size:16px;font-weight:600;color:#111;margin:0 0 16px 0;">Business Info</h4>
-      <div style="font-size:14px;line-height:1.6;color:#666;">
-        NIP: 6751722268<br>
-        KRS: 0000926410<br>
-        REGON: 520424402
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;">
+      <div>
+        <h2 style="font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#111827;border-bottom:2px solid #374151;padding-bottom:8px;margin:0 0 16px 0;">Contact</h2>
+        <address style="font-style:normal;font-size:14px;line-height:1.6;color:#4b5563;">
+          <p style="margin:0 0 4px 0;font-weight:500;color:#111827;">Piotr Mraz</p>
+          <p style="margin:0 0 4px 0;"><a href="mailto:p.mraz@rgl.com.pl" style="color:#4b5563;text-decoration:underline;text-underline-offset:2px;">p.mraz@rgl.com.pl</a></p>
+          <p style="margin:0 0 4px 0;"><a href="tel:+48577930002" style="color:#4b5563;text-decoration:none;">+48 577 930 002</a></p>
+          <p style="margin:0;"><a href="https://www.rgl.com.pl" target="_blank" rel="noopener noreferrer" style="color:#4b5563;text-decoration:underline;text-underline-offset:2px;">www.rgl.com.pl</a></p>
+        </address>
+      </div>
+      <div>
+        <h2 style="font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#111827;border-bottom:2px solid #374151;padding-bottom:8px;margin:0 0 16px 0;">Business Info</h2>
+        <div style="font-size:14px;line-height:1.6;color:#4b5563;">
+          <p style="margin:0 0 4px 0;font-weight:500;color:#111827;">RGL Robert Gajewski</p>
+          <p style="margin:0 0 4px 0;">ul. Krakowska 28a</p>
+          <p style="margin:0 0 4px 0;">45-018 Opole</p>
+          <p style="margin:0 0 4px 0;">NIP: PL7532000665</p>
+          <p style="margin:0;">Timocom ID: 330086</p>
+        </div>
       </div>
     </div>
-  </div>
-  <div style="max-width:1200px;margin:32px auto 0;padding-top:24px;border-top:1px solid #e5e7eb;text-align:center;font-size:12px;color:#9ca3af;">
-    © 2025 RGL Freight Polska Sp. z o.o. All rights reserved.
+    <div style="margin-top:40px;border-top:1px solid #e5e7eb;padding-top:24px;text-align:center;">
+      <p style="font-size:12px;color:#6b7280;margin:0;">&copy; 2026 RGL Logistics Network. All rights reserved.</p>
+    </div>
   </div>
 </footer>
 `;
