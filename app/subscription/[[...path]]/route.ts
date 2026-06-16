@@ -93,10 +93,9 @@ a:hover {
   opacity: 0.7 !important;
 }
 
-/* Card: every section (unsubscribe + privacy blocks) and the opt-in form.
-   One consistent white card per logical group — no nested/outer frames. */
-section,
-form.optin-form {
+/* Card: every section is one consistent white card. Opt-in, unsubscribe and
+   privacy blocks all wrap their content in a <section>. No nested/outer frames. */
+section {
   background: #ffffff !important;
   border: 1px solid #e5e7eb !important;
   border-radius: 8px !important;
@@ -105,7 +104,8 @@ form.optin-form {
   margin: 0 0 16px 0 !important;
 }
 
-/* Forms are layout wrappers around/inside cards — never draw their own frame */
+/* Forms are layout wrappers inside cards — never draw their own frame */
+form.optin-form,
 form.unsub-form,
 form.data-form,
 section form {
@@ -115,6 +115,13 @@ section form {
   box-shadow: none !important;
   padding: 0 !important;
   margin: 0 !important;
+}
+
+/* Opt-in: the single mailing-list name adds nothing — hide it. The hidden
+   <input name="l"> inside the same <ul> still submits (display:none doesn't
+   stop form submission), so confirmation keeps working. */
+.optin-form ul {
+  display: none !important;
 }
 
 label {
@@ -401,6 +408,17 @@ async function proxyToListmonk(request: NextRequest) {
     // Clean up empty elements that may remain
     modified = modified.replace(/<p[^>]*>\s*<\/p>/gi, "");
     modified = modified.replace(/<div[^>]*>\s*<\/div>/gi, "");
+
+    // Opt-in page: replace generic listmonk wording with RGL-specific copy.
+    // The mailing-list name itself is hidden via CSS (.optin-form ul).
+    modified = modified.replace(
+      /<h2>\s*Confirm\s*<\/h2>/gi,
+      "<h2>Join the RGL partner network</h2>"
+    );
+    modified = modified.replace(
+      /You have been added to the following lists:/gi,
+      "Please confirm that you would like to join the RGL Robert Gajewski partner network and receive our latest freight offers directly in your inbox."
+    );
 
     if (modified.includes("</head>")) {
       modified = modified.replace("</head>", `${RGL_CSS}</head>`);
