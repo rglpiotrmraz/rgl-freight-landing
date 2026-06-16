@@ -34,16 +34,20 @@ main, .container, .wrap {
   flex: 1 0 auto;
 }
 
+/* Outer wrapper is just a centered column — strip Listmonk's frame/shadow */
 .container, .wrap {
   width: 100% !important;
   max-width: 480px !important;
   margin: 0 auto !important;
   padding: 56px 24px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
+/* Header only held the (now stripped) Listmonk logo — hide its empty frame */
 header, .header {
-  text-align: center !important;
-  margin-bottom: 32px !important;
+  display: none !important;
 }
 
 h1, .title {
@@ -89,21 +93,22 @@ a:hover {
   opacity: 0.7 !important;
 }
 
-/* Card: section wrappers (unsubscribe page) and the opt-in form itself */
-section.section,
+/* Card: every section (unsubscribe + privacy blocks) and the opt-in form.
+   One consistent white card per logical group — no nested/outer frames. */
+section,
 form.optin-form {
   background: #ffffff !important;
   border: 1px solid #e5e7eb !important;
   border-radius: 8px !important;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05) !important;
   padding: 28px 24px !important;
-  margin: 0 0 20px 0 !important;
+  margin: 0 0 16px 0 !important;
 }
 
-/* Forms nested inside a section must not draw a second card */
+/* Forms are layout wrappers around/inside cards — never draw their own frame */
 form.unsub-form,
 form.data-form,
-section.section form {
+section form {
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
