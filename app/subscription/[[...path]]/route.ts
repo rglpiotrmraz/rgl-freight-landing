@@ -329,7 +329,16 @@ async function proxyToListmonk(request: NextRequest) {
     modified = modified.replace(/<footer[^>]*>[\s\S]*?Powered by[\s\S]*?<\/footer>/gi, "");
     modified = modified.replace(/<a[^>]*href=["'][^"']*listmonk\.app[^"']*["'][^>]*>[\s\S]*?<\/a>/gi, "");
     modified = modified.replace(/<img[^>]*(?:src|alt)=["'][^"']*listmonk[^"']*["'][^>]*\/?>/gi, "");
+    // Listmonk's logo is served from /public/static/logo.svg with a generic
+    // alt ("Confirm subscription" / "Unsubscribe..."), so it contains no
+    // "listmonk" token — strip it by its source path and alt text instead.
+    modified = modified.replace(/<img[^>]*src=["'][^"']*\/static\/logo[^"']*["'][^>]*\/?>/gi, "");
+    modified = modified.replace(/<img[^>]*alt=["'][^"']*(?:subscription|unsubscribe)[^"']*["'][^>]*\/?>/gi, "");
     modified = modified.replace(/<[^>]*>\s*listmonk\s*<\/[^>]*>/gi, "");
+    // Remove logo link with image (listmonk logo in <a> containing <img>)
+    modified = modified.replace(/<a[^>]*href=["'][^"']*listmonk[^"']*["'][^>]*>[\s\S]*?<img[^>]*>[\s\S]*?<\/a>/gi, "");
+    // Remove logo container div (e.g. <div class="logo"> with link+image)
+    modified = modified.replace(/<div[^>]*class=["']logo["'][^>]*>[\s\S]*?<\/div>/gi, "");
     // Clean up empty elements that may remain
     modified = modified.replace(/<p[^>]*>\s*<\/p>/gi, "");
     modified = modified.replace(/<div[^>]*>\s*<\/div>/gi, "");
