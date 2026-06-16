@@ -420,10 +420,14 @@ async function proxyToListmonk(request: NextRequest) {
       "Please confirm that you would like to join the RGL Robert Gajewski partner network and receive our latest freight offers directly in your inbox."
     );
 
+    // Replace Listmonk's favicon with the RGL one served by Next at /favicon.ico
+    modified = modified.replace(/<link[^>]*rel=["']icon["'][^>]*>/gi, "");
+    const RGL_FAVICON = `<link rel="icon" href="/favicon.ico" sizes="any" />`;
+
     if (modified.includes("</head>")) {
-      modified = modified.replace("</head>", `${RGL_CSS}</head>`);
+      modified = modified.replace("</head>", `${RGL_FAVICON}${RGL_CSS}</head>`);
     } else if (modified.includes("<head>")) {
-      modified = modified.replace("<head>", `<head>${RGL_CSS}`);
+      modified = modified.replace("<head>", `<head>${RGL_FAVICON}${RGL_CSS}`);
     }
 
     if (modified.includes("</body>")) {
