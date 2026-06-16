@@ -4,20 +4,25 @@ const LISTMONK_API_URL = process.env.LISTMONK_API_URL;
 
 const RGL_CSS = `
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+
+/* Mirror the homepage subscription form (app/components/subscription-form.tsx):
+   Geist font, white card with gray-200 border + rounded-lg + shadow-sm,
+   gray-300 inputs with black focus ring, solid black primary button. */
 
 * {
   box-sizing: border-box;
 }
 
 html, body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-family: 'Geist', system-ui, -apple-system, sans-serif !important;
   background: #ffffff !important;
-  color: #111111 !important;
+  color: #111827 !important;
   margin: 0 !important;
   padding: 0 !important;
   line-height: 1.6 !important;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
@@ -25,67 +30,86 @@ body {
   flex-direction: column;
 }
 
-main, .container, .wrap, section {
+main, .container, .wrap {
   flex: 1 0 auto;
 }
 
 .container, .wrap {
-  max-width: 680px !important;
+  width: 100% !important;
+  max-width: 480px !important;
   margin: 0 auto !important;
-  padding: 48px 24px !important;
+  padding: 56px 24px !important;
 }
 
 header, .header {
   text-align: center !important;
-  margin-bottom: 40px !important;
+  margin-bottom: 32px !important;
 }
 
 h1, .title {
-  font-size: 36px !important;
+  font-size: 28px !important;
   font-weight: 700 !important;
   letter-spacing: -0.025em !important;
-  color: #000000 !important;
+  color: #111827 !important;
   margin-top: 0 !important;
-  margin-bottom: 16px !important;
-  line-height: 1.1 !important;
+  margin-bottom: 8px !important;
+  line-height: 1.15 !important;
 }
 
 h2 {
-  font-size: 24px !important;
+  font-size: 20px !important;
   font-weight: 600 !important;
-  color: #111111 !important;
+  letter-spacing: -0.015em !important;
+  color: #111827 !important;
   margin-top: 0 !important;
+  margin-bottom: 16px !important;
 }
 
 h3 {
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-weight: 600 !important;
-  color: #111111 !important;
+  color: #111827 !important;
   margin-top: 0 !important;
-  margin-bottom: 16px !important;
+  margin-bottom: 12px !important;
 }
 
 p {
   color: #4b5563 !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   line-height: 1.6 !important;
 }
 
 a {
-  color: #111111 !important;
+  color: #111827 !important;
   text-decoration: underline !important;
+  text-underline-offset: 2px !important;
 }
 
 a:hover {
-  opacity: 0.8 !important;
+  opacity: 0.7 !important;
 }
 
-form {
-  margin-top: 24px !important;
+/* Card: section wrappers (unsubscribe page) and the opt-in form itself */
+section.section,
+form.optin-form {
   background: #ffffff !important;
   border: 1px solid #e5e7eb !important;
   border-radius: 8px !important;
-  padding: 32px 24px !important;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05) !important;
+  padding: 28px 24px !important;
+  margin: 0 0 20px 0 !important;
+}
+
+/* Forms nested inside a section must not draw a second card */
+form.unsub-form,
+form.data-form,
+section.section form {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 label {
@@ -93,7 +117,7 @@ label {
   font-size: 14px !important;
   font-weight: 500 !important;
   color: #374151 !important;
-  margin-bottom: 4px !important;
+  margin-bottom: 6px !important;
 }
 
 input[type="text"],
@@ -103,15 +127,15 @@ input[type="number"],
 textarea,
 select {
   width: 100% !important;
-  padding: 10px 14px !important;
+  padding: 10px 12px !important;
   border: 1px solid #d1d5db !important;
   border-radius: 6px !important;
   font-size: 14px !important;
-  color: #111111 !important;
+  color: #111827 !important;
   background: #ffffff !important;
   margin-top: 4px !important;
   margin-bottom: 16px !important;
-  font-family: 'Inter', system-ui, sans-serif !important;
+  font-family: inherit !important;
   transition: border-color 0.15s, box-shadow 0.15s !important;
 }
 
@@ -122,23 +146,32 @@ input[type="number"]:focus,
 textarea:focus,
 select:focus {
   outline: none !important;
-  border-color: #111111 !important;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.05) !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 0 2px #000000 !important;
 }
 
 input[type="checkbox"],
 input[type="radio"] {
   width: 18px !important;
   height: 18px !important;
-  margin-right: 10px !important;
-  accent-color: #dc2626 !important;
+  margin: 0 10px 0 0 !important;
+  accent-color: #111827 !important;
   cursor: pointer !important;
   flex-shrink: 0 !important;
 }
 
+/* Rows that pair a control with its label (unsubscribe / privacy options) */
+.row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 10px !important;
+}
+
 .checkbox label,
 label.checkbox,
-label:has(input[type="checkbox"]) {
+label:has(input[type="checkbox"]),
+label:has(input[type="radio"]) {
   display: flex !important;
   align-items: center !important;
   font-size: 14px !important;
@@ -147,39 +180,60 @@ label:has(input[type="checkbox"]) {
   margin-bottom: 12px !important;
 }
 
+/* Primary button — matches the black homepage Subscribe button */
 button[type="submit"],
 input[type="submit"],
 .button, button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   width: 100% !important;
-  padding: 12px 24px !important;
-  background: #dc2626 !important;
+  padding: 11px 24px !important;
+  background: #000000 !important;
   color: #ffffff !important;
-  border: none !important;
+  border: 1px solid #000000 !important;
   border-radius: 6px !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   cursor: pointer !important;
   margin-top: 8px !important;
-  transition: background-color 0.2s !important;
-  font-family: 'Inter', system-ui, sans-serif !important;
+  transition: background-color 0.15s, border-color 0.15s !important;
+  font-family: inherit !important;
 }
 
 button[type="submit"]:hover,
 input[type="submit"]:hover,
 .button:hover,
 button:hover {
-  background: #b91c1c !important;
+  background: #1f2937 !important;
+  border-color: #1f2937 !important;
+}
+
+/* Secondary / outline button (e.g. "Continue" on the data form) */
+.button-outline,
+input.button-outline {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.button-outline:hover,
+input.button-outline:hover {
+  background: #f9fafb !important;
+  border-color: #d1d5db !important;
 }
 
 ul {
   list-style: none !important;
   padding: 0 !important;
-  margin: 0 0 24px 0 !important;
+  margin: 0 0 20px 0 !important;
 }
 
 li {
   padding: 12px 0 !important;
   border-bottom: 1px solid #f3f4f6 !important;
+  font-size: 14px !important;
+  color: #374151 !important;
 }
 
 li:last-child {
@@ -188,8 +242,8 @@ li:last-child {
 
 .message, .alert, .notice, .success, .error {
   padding: 16px !important;
-  border-radius: 8px !important;
-  margin-bottom: 24px !important;
+  border-radius: 6px !important;
+  margin-bottom: 20px !important;
   font-size: 14px !important;
 }
 
@@ -208,7 +262,7 @@ li:last-child {
 table {
   width: 100% !important;
   border-collapse: collapse !important;
-  margin-bottom: 24px !important;
+  margin-bottom: 20px !important;
 }
 
 td, th {
@@ -220,7 +274,7 @@ td, th {
 
 th {
   font-weight: 600 !important;
-  color: #111111 !important;
+  color: #111827 !important;
   border-bottom: 2px solid #e5e7eb !important;
 }
 
